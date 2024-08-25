@@ -1,6 +1,9 @@
 import Image from 'next/image';
 import { db } from '~/server/db';
 
+// everytime this page is loaded, it will be rendered new data from server
+export const dynamic = 'force-dynamic';
+
 const mockUrls = [
   'https://utfs.io/f/9ead65c2-e18e-4994-abf0-7893cdd18607-ex4y7s.jpg',
   'https://utfs.io/f/d305356a-51bd-4ed6-ab5e-3ef66d8eb43e-8yiwgi.jpg',
