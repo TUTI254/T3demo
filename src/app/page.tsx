@@ -1,18 +1,17 @@
+import { SignedIn, SignedOut } from '@clerk/nextjs';
 import Image from 'next/image';
 import { db } from '~/server/db';
 
 // everytime this page is loaded, it will be rendered new data from server
 export const dynamic = 'force-dynamic';
 
-export default async function HomePage() {
-
+async function Images(){
   const images = await db.query.images.findMany({
     orderBy: (model, {desc}) => desc(model.id),
   });
 
   return (
-    <main className="">
-      <div className="flex flex-wrap gap-4">
+    <div className="flex flex-wrap gap-4">
         {images.map((item) => (
           <div key={item.id} className=" flex flex-col items-center justify-center w-48 p-4">
             <Image
@@ -27,6 +26,23 @@ export default async function HomePage() {
           </div>
         ))}
       </div>
+  )
+}
+
+export default async function HomePage() {
+ 
+
+  return (
+    <main className="">
+      <SignedOut>
+        <div className="w-full h-full text-2xl">
+          Please sign in to view your images
+        </div>
+      </SignedOut>
+      <SignedIn>
+        <Images/>
+      </SignedIn>
+      
     </main>
   );
 }
