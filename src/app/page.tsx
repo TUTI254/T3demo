@@ -1,14 +1,12 @@
 import { SignedIn, SignedOut } from '@clerk/nextjs';
 import Image from 'next/image';
-import { db } from '~/server/db';
+import { getMyImages } from '~/server/queries';
 
 // everytime this page is loaded, it will be rendered new data from server
 export const dynamic = 'force-dynamic';
 
 async function Images(){
-  const images = await db.query.images.findMany({
-    orderBy: (model, {desc}) => desc(model.id),
-  });
+  const images = await getMyImages();
 
   return (
     <div className="flex flex-wrap gap-4">
